@@ -1,0 +1,3 @@
+./waf
+The project was not configured: run "waf configure" first!
+make: *** [all] Error 1

@@ -1,0 +1,34 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    module = bld.create_ns3_module('satellite-point-to-point', ['network', 'mpi', 'mobility', 'propagation'])
+    module.includes = '.'
+    module.source = [
+        'model/satellite-point-to-point-net-device.cc',
+        'model/satellite-point-to-point-channel.cc',
+        'model/satellite-point-to-point-remote-channel.cc',
+        'model/sppp-header.cc',
+        'model/satellite-physical.cc',
+        'helper/satellite-point-to-point-helper.cc',
+        ]
+
+    module_test = bld.create_ns3_module_test_library('satellite-point-to-point')
+    module_test.source = [
+        'test/satellite-point-to-point-test.cc',
+        ]
+
+    headers = bld(features='ns3header')
+    headers.module = 'satellite-point-to-point'
+    headers.source = [
+        'model/satellite-point-to-point-net-device.h',
+        'model/satellite-point-to-point-channel.h',
+        'model/satellite-point-to-point-remote-channel.h',
+        'model/sppp-header.h',
+        'model/satellite-physical.h',
+        'helper/satellite-point-to-point-helper.h',
+        ]
+
+    if (bld.env['ENABLE_EXAMPLES']):
+        bld.recurse('examples')
+   
+    bld.ns3_python_bindings()
